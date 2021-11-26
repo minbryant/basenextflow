@@ -4,10 +4,22 @@ cheers = Channel.from 'Bonjour', 'Ciao', 'Hello', 'Hola'
 
 process sayHello {
   echo true
-  input: 
+  input:
     val x from cheers
+  output:
+    val x into receiver
   script:
     """
-    echo '$x world!'
+    echo '$x'
+    """
+}
+
+process sayWorld {
+  echo true
+  input:
+    val x from receiver
+  script:
+    """
+    echo '$x received on step 2 and reply "world!"'
     """
 }
